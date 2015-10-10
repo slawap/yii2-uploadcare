@@ -1,12 +1,13 @@
 Yii2 wrapper for Uploadcare PHP package
 =======================================
-Uploadcare handles uploading, storing and processing files for you. All components of Uploadcare, from widget to CDN, work seamlessly together, require almost no configuration and allow maximum flexibility exactly when you need it.
+>Uploadcare handles uploading, storing and processing files for you. All components of Uploadcare, from widget to CDN, work seamlessly together, require almost no configuration and allow maximum flexibility exactly when you need it.
 [PHP Library](https://github.com/uploadcare/uploadcare-php)
 [Uploadcare documentation](https://uploadcare.com/documentation/)
 
-Configure
+Configuration
 =========
-Api is a yii2 component, which is a facade to \Uploadcare\Api
+Api is a yii2 component, which is a facade to \Uploadcare\Api.
+
 Example config:
 ```php
 'components' => [
@@ -26,6 +27,7 @@ globalWidgetOptions - allow you set global options for all call of widget. [supp
 Widget
 ======
 Show file(s) input widget
+
 Example call:
 ```php
 
@@ -52,6 +54,7 @@ echo $form->field($model, 'logo')->widget(
 ```
 
 Local widget settings you can set using html5 data attributes. [supported options](https://uploadcare.com/documentation/widget/)
+
 [Validators allow restricting user choice to certain kind of files.](https://uploadcare.com/documentation/javascript_api/#validation)
 
 Store file(s) permanently and set UUID to model attribute
@@ -72,7 +75,9 @@ example config:
     }
 ```
 File(s)Behavior call api method for save file(s) permanently.
+
 FilesBehavior - set UIID to model attribute
+
 FilesBehavior - group UIID or files UIID array (depending on the groupUUID attribute) to model attribute.
 
 Show files
