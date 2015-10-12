@@ -82,6 +82,12 @@ FilesBehavior - set UIID to model attribute
 
 FilesBehavior - group UIID or files UIID array (depending on the groupUUID attribute) to model attribute.
 
-Show files
+Show images
 ==========
+Image helper generates an image tag by UUID
 
+Example:
+```php
+echo Image::img($uuid, $options); //draw img tag
+echo Image::img($image, ['width' => '100'])->resize(200)->crop(100,100); //resize and crop image, then render img tag 
+```
