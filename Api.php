@@ -56,4 +56,9 @@ class Api extends Component
             return parent::__call($name, $params);
         }
     }
+
+    public function getUploadCareApi()
+    {
+        return $this->_api;
+    }
 }
