@@ -1,5 +1,5 @@
 {
-    "name": "sokrat/yii2-uploadcare",
+    "name": "uploadcare/yii2-uploadcare",
     "description": "Yii2 wrapper for uploadcare service",
     "tags": ["yii2", "uploadcare", "file", "storage", "image", "upload"],
     "require": {
