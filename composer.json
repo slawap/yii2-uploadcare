@@ -3,7 +3,7 @@
     "description": "Yii2 wrapper for uploadcare service",
     "tags": ["yii2", "uploadcare", "file", "storage", "image", "upload"],
     "require": {
-        "uploadcare/uploadcare-php": "^1.4"
+        "uploadcare/uploadcare-php": "^1.5"
     },
     "license": "MIT",
     "authors": [
