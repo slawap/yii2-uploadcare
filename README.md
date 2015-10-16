@@ -69,9 +69,7 @@ Example config:
             'logo' => [
                 'class' => FilesBehavior::class,
                 'groupUUID' => false,
-                'attributes' => [
-                    self::EVENT_AFTER_VALIDATE => ['logo']
-                ]
+                'attributes' => ['logo']
             ]
         ];
     }
