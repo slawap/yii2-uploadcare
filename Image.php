@@ -26,7 +26,7 @@ class Image extends File
      * @param $options
      * @return Image
      */
-    public static function img($uuid, $options)
+    public static function img($uuid, $options = [])
     {
         return new Image($uuid, $options);
     }
