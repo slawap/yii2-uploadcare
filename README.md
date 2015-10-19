@@ -14,7 +14,7 @@ Example config:
 ```php
 'components' => [
     'uploadcare' => [
-        'class' => 'sokrat\uploadcare\Api',
+        'class' => 'uploadcare\yii2\Api',
         'publicKey' => 'your_public_key',
         'secretKey' => 'your_secret_key',
         'globalWidgetOptions' => [
@@ -33,7 +33,7 @@ Show file(s) input widget
 Example call:
 ```php
 
-use sokrat\uploadcare\UploadCare;
+use uploadcare\yii2\UploadCare;
 
 echo $form->field($model, 'logo')->widget(
     UploadCare::className(),
@@ -69,7 +69,9 @@ Example config:
             'logo' => [
                 'class' => FilesBehavior::class,
                 'groupUUID' => false,
-                'attributes' => ['logo']
+                'attributes' => [
+                    self::EVENT_AFTER_VALIDATE => ['logo']
+                ]
             ]
         ];
     }

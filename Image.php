@@ -1,6 +1,6 @@
 <?php
 
-namespace sokrat\uploadcare;
+namespace uploadcare\yii2;
 
 use Uploadcare\File;
 use yii\helpers\Html;
@@ -8,7 +8,7 @@ use Yii;
 
 /**
  * Class Image
- * @package sokrat\uploadcare
+ * @package uploadcare\yii2
  */
 class Image extends File
 {
@@ -26,7 +26,7 @@ class Image extends File
      * @param $options
      * @return Image
      */
-    public static function img($uuid, $options = [])
+    public static function img($uuid, $options)
     {
         return new Image($uuid, $options);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace sokrat\uploadcare;
+namespace uploadcare\yii2;
 
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
