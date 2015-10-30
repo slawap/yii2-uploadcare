@@ -3,36 +3,38 @@
 namespace uploadcare\yii2;
 
 use yii\base\Behavior;
+use yii\db\ActiveRecord;
 use Yii;
 
 /**
  * Class FileBehavior
  * Save file and set UUID as attribute value
+ * @property ActiveRecord $owner
  * @package uploadcare\yii2
  */
 class FileBehavior extends Behavior
 {
     /**
-     * @var array list of attributes that are to be automatically filled with the value specified via [[value]].
-     * The array keys are the ActiveRecord events upon which the attributes are to be updated,
-     * and the array values are the corresponding attribute(s) to be updated. You can use a string to represent
-     * a single attribute, or an array to represent a list of attributes. For example,
-     *
-     * ```php
-     * [
-     *     ActiveRecord::EVENT_BEFORE_INSERT => ['attribute1', 'attribute2'],
-     *     ActiveRecord::EVENT_BEFORE_UPDATE => 'attribute2',
-     * ]
-     * ```
+     * file attributes
+     * @var array
      */
     public $attributes = [];
+    public $events = [
+        ActiveRecord::EVENT_BEFORE_VALIDATE => 'evaluate',
+        ActiveRecord::EVENT_AFTER_DELETE => 'delete'
+    ];
+    /**
+     * Delete files when they have been replaced
+     * @var bool
+     */
+    public $deleteUnused = true;
 
     /**
      * @inheritdoc
      */
     public function events()
     {
-        return array_fill_keys(array_keys($this->attributes), 'evaluateAttributes');
+        return $this->events;
     }
 
 
@@ -40,28 +42,80 @@ class FileBehavior extends Behavior
      * Evaluates the attribute value and assigns it to the current attributes.
      * @param \yii\base\Event $event
      */
-    public function evaluateAttributes($event)
+    public function evaluate($event)
     {
-        if (!empty($this->attributes[$event->name])) {
-            $attributes = (array) $this->attributes[$event->name];
-            foreach ($attributes as $attribute) {
-                // ignore attribute names which are not string (e.g. when set by TimestampBehavior::updatedAtAttribute)
-                if (is_string($attribute)) {
-                    $this->owner->$attribute = $this->getValue($attribute);
+        foreach ($this->attributes as $attribute) {
+            // ignore attribute names which are not string (e.g. when set by TimestampBehavior::updatedAtAttribute)
+            if (is_string($attribute) && $this->isAttributeChanged($attribute)) {
+                if ($this->deleteUnused) {
+                    $this->deleteValue($this->owner->getOldAttribute($attribute));
                 }
+                $this->owner->$attribute = $this->getValue($attribute);
             }
         }
     }
-
+    protected function compareUUID($oldValue, $newValue)
+    {
+        /** @var \UploadCare\File $oldFile */
+        $oldFile = Yii::$app->uploadcare->getFile($oldValue);
+        /** @var \UploadCare\File $newFile */
+        $newFile = Yii::$app->uploadcare->getFile($newValue);
+        if ($oldFile->getUuid() == $newFile->getUuid()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    protected function isAttributeChanged($attribute)
+    {
+        $oldValue = $this->owner->getOldAttribute($attribute);
+        $newValue = $this->owner->$attribute;
+        if (!empty($oldValue) && !empty($newValue)) {
+            return $this->compareUUID($oldValue, $newValue);
+        } elseif (!empty($oldValue) || !empty($newValue)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
+     * Deletes uploaded files
+     * @param $event
+     */
+    public function delete($event)
+    {
+        foreach ($this->attributes as $attribute) {
+            // ignore attribute names which are not string (e.g. when set by TimestampBehavior::updatedAtAttribute)
+            if (is_string($attribute)) {
+                $this->deleteValue($this->owner->$attribute);
+            }
+        }
+    }
+    /**
+     * Return new UUID for attribute value
      * @param $attribute
      * @return string
      */
     public function getValue($attribute)
     {
+        if (empty($this->owner->$attribute)) {
+            return null;
+        }
         /** @var \UploadCare\File $file */
         $file = Yii::$app->uploadcare->getFile($this->owner->$attribute);
         $file->store();
         return $file->getUuid();
+    }
+    /**
+     * deletes file on uploadcare
+     * @param $value
+     */
+    protected function deleteValue($value)
+    {
+        if (!empty($value)) {
+            /** @var \UploadCare\File $file */
+            $file = Yii::$app->uploadcare->getFile($value);
+            $file->delete();
+        }
     }
 }
