@@ -18,7 +18,7 @@ class UploadcareAsset extends AssetBundle
 
     public $sourcePath = '@bower/uploadcare';
     public $js = [
-        'uploadcare.js',
+        'uploadcare.min.js',
     ];
     public $depends = [
         'yii\web\JqueryAsset',
