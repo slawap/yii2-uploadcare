@@ -12,6 +12,10 @@ use yii\web\AssetBundle;
 
 class UploadcareAsset extends AssetBundle
 {
+    const CDN_SOURCE_PATH = '//ucarecdn.com/widget/%s/uploadcare/uploadcare.min.js';
+
+    public $version = false;
+
     public $sourcePath = '@bower/uploadcare';
     public $js = [
         'uploadcare.js',
@@ -19,4 +23,13 @@ class UploadcareAsset extends AssetBundle
     public $depends = [
         'yii\web\JqueryAsset',
     ];
+
+    public function registerAssetFiles($view)
+    {
+        if ($this->version) {
+            $version = is_string($this->version) ? $this->version : UploadCare::VERSION;
+            $this->baseUrl = sprintf(self::CDN_SOURCE_PATH, $version);
+        }
+        parent::registerAssetFiles($view);
+    }
 }

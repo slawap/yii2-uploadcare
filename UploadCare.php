@@ -16,6 +16,20 @@ use Yii;
 class UploadCare extends InputWidget
 {
     /**
+     * Choose UploadCare version from CDN
+     * true - use current version from CDN
+     * '2.10.3' - use custom version
+     *
+     * @var bool | string
+     */
+    public static $useCDN = false;
+
+    /**
+     * Current UploadCare widget version
+     */
+    const VERSION = '2.10.4';
+
+    /**
      * UploadCare widget
      * @var Api
      */

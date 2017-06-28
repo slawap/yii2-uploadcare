@@ -3,6 +3,7 @@
     "description": "Yii2 wrapper for uploadcare service",
     "tags": ["yii2", "uploadcare", "file", "storage", "image", "upload"],
     "require": {
+        "yiisoft/yii2": "*",
         "uploadcare/uploadcare-php": "^1.5",
         "bower-asset/uploadcare-widget": "~2.10.4"
     },
