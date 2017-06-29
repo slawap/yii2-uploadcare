@@ -2,7 +2,7 @@
 /**
  * Class UploadcareAsset Asset bundle for
  * @package uploadcare\yii2
- * @author Vyacheslav Panin
+ * @author Viacheslav Panin
  * @since 0.2.0
  */
 namespace uploadcare\yii2;
