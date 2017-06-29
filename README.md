@@ -2,6 +2,10 @@ Yii2 wrapper for Uploadcare PHP package
 =======================================
 >Uploadcare handles uploading, storing and processing files for you. All components of Uploadcare, from widget to CDN, work seamlessly together, require almost no configuration and allow maximum flexibility exactly when you need it.
 
+[![Latest Stable Version](https://poser.pugx.org/slawap/yii2-uploadcare/v/stable.png)](https://packagist.org/packages/slawap/yii2-uploadcare)
+[![Total Downloads](https://poser.pugx.org/slawap/yii2-uploadcare/downloads.png)](https://packagist.org/packages/slawap/yii2-uploadcare)
+[![Build Status](https://travis-ci.org/slawap/yii2-uploadcare.svg?branch=master)](https://travis-ci.org/slawap/yii2-uploadcarei)
+
 [PHP Library](https://github.com/uploadcare/uploadcare-php)
 
 [Uploadcare documentation](https://uploadcare.com/documentation/)
