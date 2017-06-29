@@ -16,26 +16,6 @@ use Yii;
 class UploadCare extends InputWidget
 {
     /**
-     * Choose UploadCare version from CDN
-     * true - use current version from CDN
-     * '2.10.3' - use custom version
-     *
-     * @var bool | string
-     */
-    public static $useCDN = false;
-
-    /**
-     * Current UploadCare widget version
-     */
-    const VERSION = '2.10.4';
-
-    /**
-     * UploadCare widget
-     * @var Api
-     */
-    private $_component;
-
-    /**
      * @var array
      */
     public $validators = [];
@@ -48,8 +28,6 @@ class UploadCare extends InputWidget
     {
         if (!Yii::$app->has('uploadcare')) {
             throw new InvalidConfigException('You should configure uploadcare component');
-        } else {
-            $this->_component = Yii::$app->uploadcare;
         }
 
         if (empty($this->value)) {
@@ -82,8 +60,11 @@ class UploadCare extends InputWidget
     protected function registerClientScript()
     {
         $view = $this->getView();
-        $view->registerJsFile($this->_component->widget->getScriptSrc());
+
+        UploadcareAsset::register($view);
+
         $view->registerJs($this->globalVariables, $view::POS_HEAD, 'uploadcare');
+
         $validators = Json::encode($this->validators);
         $value = Json::encode($this->value);
 
@@ -100,7 +81,7 @@ class UploadCare extends InputWidget
     {
         $js[] = sprintf("UPLOADCARE_PUBLIC_KEY='%s'", Yii::$app->uploadcare->publicKey);
 
-        foreach ($this->_component->globalWidgetOptions as $constant => $value) {
+        foreach (Yii::$app->uploadcare->globalWidgetOptions as $constant => $value) {
             $js[] = "{$constant}='$value'";
         }
         return implode(';', $js);
