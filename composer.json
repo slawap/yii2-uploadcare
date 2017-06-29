@@ -4,7 +4,7 @@
     "tags": ["yii2", "uploadcare", "file", "storage", "image", "upload"],
     "require": {
         "uploadcare/uploadcare-php": "^1.5",
-        "bower-asset/uploadcare-widget": "~2.10.4"
+        "bower-asset/uploadcare": "~2.10.4"
     },
     "license": "MIT",
     "authors": [
